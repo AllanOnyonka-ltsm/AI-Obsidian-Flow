@@ -25,3 +25,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Artifacts
+
+- `artifacts/obsidian-exporter` — React + Vite web app at `/`. Client-side tool that imports ChatGPT/Claude/generic JSON exports (or pasted transcripts) and produces a downloadable ZIP of Obsidian markdown notes with YAML frontmatter, `[[wikilinks]]`, topic notes, and a master index, all wired so the Obsidian graph view shows real connections. Includes a live force-graph preview of conversations and topics. Pure frontend, no backend.

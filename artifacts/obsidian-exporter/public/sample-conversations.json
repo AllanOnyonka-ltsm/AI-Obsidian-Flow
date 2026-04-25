@@ -1,0 +1,212 @@
+[
+  {
+    "title": "Designing a vector database schema",
+    "create_time": 1729430000,
+    "update_time": 1729432000,
+    "default_model_slug": "gpt-4-turbo",
+    "conversation_id": "sample-1",
+    "mapping": {
+      "root": { "id": "root", "parent": null, "children": ["m1"] },
+      "m1": {
+        "id": "m1",
+        "parent": "root",
+        "children": ["m2"],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729430000,
+          "content": { "parts": ["I'm designing a vector database schema for storing embeddings of customer support tickets. What columns should I include?"] }
+        }
+      },
+      "m2": {
+        "id": "m2",
+        "parent": "m1",
+        "children": ["m3"],
+        "message": {
+          "author": { "role": "assistant" },
+          "create_time": 1729430050,
+          "content": { "parts": ["For a vector database storing support ticket embeddings, you'll want: ticket_id (UUID, primary key), embedding (vector type, e.g. pgvector with the model's dimension), source_text (the original ticket content), metadata (JSONB for tags, customer_id, product_area), created_at, and an HNSW or IVFFlat index on the embedding column for fast similarity search."] }
+        }
+      },
+      "m3": {
+        "id": "m3",
+        "parent": "m2",
+        "children": ["m4"],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729430120,
+          "content": { "parts": ["Should I use pgvector or pinecone for this scale (100k tickets)?"] }
+        }
+      },
+      "m4": {
+        "id": "m4",
+        "parent": "m3",
+        "children": [],
+        "message": {
+          "author": { "role": "assistant" },
+          "create_time": 1729430180,
+          "content": { "parts": ["At 100k embeddings, pgvector inside Postgres is more than enough and keeps your data in one place — no extra service to manage. Pinecone really shines when you need >10M vectors, complex filtering at scale, or zero infrastructure work. For 100k tickets with HNSW indexing, pgvector queries will return in under 50ms."] }
+        }
+      }
+    }
+  },
+  {
+    "title": "Sourdough hydration troubleshooting",
+    "create_time": 1729520000,
+    "update_time": 1729521500,
+    "default_model_slug": "gpt-4-turbo",
+    "conversation_id": "sample-2",
+    "mapping": {
+      "root": { "id": "root", "parent": null, "children": ["s1"] },
+      "s1": {
+        "id": "s1",
+        "parent": "root",
+        "children": ["s2"],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729520000,
+          "content": { "parts": ["My sourdough loaves are coming out gummy in the middle. Hydration is at 78%. What's going wrong?"] }
+        }
+      },
+      "s2": {
+        "id": "s2",
+        "parent": "s1",
+        "children": [],
+        "message": {
+          "author": { "role": "assistant" },
+          "create_time": 1729520080,
+          "content": { "parts": ["A gummy crumb at 78% hydration usually means one of three things: under-fermentation (the dough hasn't built enough gas structure), under-baking (internal temperature should hit 205-210°F), or slicing too early (cutting before it cools traps steam in the crumb). Try extending bulk fermentation by 30-45 minutes, baking until the loaf sounds hollow when tapped, and waiting at least 2 hours before slicing."] }
+        }
+      }
+    }
+  },
+  {
+    "title": "Next.js server actions vs API routes",
+    "create_time": 1729610000,
+    "update_time": 1729612000,
+    "default_model_slug": "gpt-4-turbo",
+    "conversation_id": "sample-3",
+    "mapping": {
+      "root": { "id": "root", "parent": null, "children": ["n1"] },
+      "n1": {
+        "id": "n1",
+        "parent": "root",
+        "children": ["n2"],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729610000,
+          "content": { "parts": ["When should I use Next.js server actions instead of traditional API routes for my database mutations?"] }
+        }
+      },
+      "n2": {
+        "id": "n2",
+        "parent": "n1",
+        "children": ["n3"],
+        "message": {
+          "author": { "role": "assistant" },
+          "create_time": 1729610100,
+          "content": { "parts": ["Use server actions when the mutation is invoked directly from a React component (form submit, button click) and you don't need the endpoint exposed publicly. They give you progressive enhancement, automatic typing, and tighter integration with React's transition APIs. Use traditional API routes when you need a public REST endpoint, third-party webhooks, or when calling from a non-React client like a mobile app."] }
+        }
+      },
+      "n3": {
+        "id": "n3",
+        "parent": "n2",
+        "children": [],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729610200,
+          "content": { "parts": ["What about caching? Does revalidatePath work with both?"] }
+        }
+      }
+    }
+  },
+  {
+    "title": "Postgres index strategy for analytics",
+    "create_time": 1729700000,
+    "update_time": 1729702500,
+    "default_model_slug": "gpt-4-turbo",
+    "conversation_id": "sample-4",
+    "mapping": {
+      "root": { "id": "root", "parent": null, "children": ["p1"] },
+      "p1": {
+        "id": "p1",
+        "parent": "root",
+        "children": ["p2"],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729700000,
+          "content": { "parts": ["I have a Postgres analytics table with 50 million rows. Queries filter by tenant_id, event_type, and a created_at range. What index strategy makes sense?"] }
+        }
+      },
+      "p2": {
+        "id": "p2",
+        "parent": "p1",
+        "children": [],
+        "message": {
+          "author": { "role": "assistant" },
+          "create_time": 1729700180,
+          "content": { "parts": ["Build a composite BTREE index on (tenant_id, event_type, created_at DESC) — that order matches your filter selectivity (tenant first, then event type, then range scan on the date). Combine that with monthly partitioning by created_at so old partitions can be detached or compressed. Add a BRIN index on created_at for very large tables — it's tiny and great for sequential time-series queries."] }
+        }
+      }
+    }
+  },
+  {
+    "title": "Espresso extraction theory",
+    "create_time": 1729790000,
+    "update_time": 1729791000,
+    "default_model_slug": "gpt-4-turbo",
+    "conversation_id": "sample-5",
+    "mapping": {
+      "root": { "id": "root", "parent": null, "children": ["e1"] },
+      "e1": {
+        "id": "e1",
+        "parent": "root",
+        "children": ["e2"],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729790000,
+          "content": { "parts": ["My espresso shots are tasting sour. Brew ratio is 1:2, time is 27 seconds. What should I change?"] }
+        }
+      },
+      "e2": {
+        "id": "e2",
+        "parent": "e1",
+        "children": [],
+        "message": {
+          "author": { "role": "assistant" },
+          "create_time": 1729790090,
+          "content": { "parts": ["Sour shots mean under-extraction. Your time of 27 seconds is borderline-fast for a 1:2 ratio. Try grinding finer to slow the flow to 28-32 seconds, or extend the ratio to 1:2.2. Also check water temperature — under 200°F suppresses extraction. Sweet, balanced espresso usually lands around 18-22% extraction yield."] }
+        }
+      }
+    }
+  },
+  {
+    "title": "React Query optimistic updates",
+    "create_time": 1729880000,
+    "update_time": 1729881500,
+    "default_model_slug": "gpt-4-turbo",
+    "conversation_id": "sample-6",
+    "mapping": {
+      "root": { "id": "root", "parent": null, "children": ["r1"] },
+      "r1": {
+        "id": "r1",
+        "parent": "root",
+        "children": ["r2"],
+        "message": {
+          "author": { "role": "user" },
+          "create_time": 1729880000,
+          "content": { "parts": ["How do I implement optimistic updates with React Query for a todo list?"] }
+        }
+      },
+      "r2": {
+        "id": "r2",
+        "parent": "r1",
+        "children": [],
+        "message": {
+          "author": { "role": "assistant" },
+          "create_time": 1729880100,
+          "content": { "parts": ["In your useMutation, use onMutate to cancel in-flight queries with queryClient.cancelQueries, snapshot the current cache, then queryClient.setQueryData to apply the new value optimistically. Return the snapshot from onMutate so onError can roll back. Always run queryClient.invalidateQueries in onSettled to reconcile with the server. This pattern keeps the UI snappy while staying eventually consistent."] }
+        }
+      }
+    }
+  }
+]

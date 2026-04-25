@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "AI to Obsidian Exporter"
+version = "1.0.0"
+id = "artifacts/obsidian-exporter"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21809
+
+[services.development]
+run = "pnpm --filter @workspace/obsidian-exporter run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/obsidian-exporter", "run", "build" ]
+publicDir = "artifacts/obsidian-exporter/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21809"
+BASE_PATH = "/"
