@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Download, Github, Sparkles, Network, FolderTree, Tags } from "lucide-react";
+import { Download, Github, Sparkles, Network, FolderTree, Tags, Plug } from "lucide-react";
+import { Link } from "wouter";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 
@@ -183,10 +184,21 @@ export default function Home() {
               Try sample
             </Button>
             <Button
+              variant="default"
+              size="sm"
+              asChild
+              data-testid="link-mcp-setup"
+            >
+              <Link href="/mcp">
+                <Plug className="mr-1.5 size-4" />
+                Use as MCP
+              </Link>
+            </Button>
+            <Button
               variant="ghost"
               size="icon"
               asChild
-              aria-label="Open project on GitHub"
+              aria-label="Open Obsidian graph view docs"
             >
               <a
                 href="https://help.obsidian.md/Plugins/Graph+view"

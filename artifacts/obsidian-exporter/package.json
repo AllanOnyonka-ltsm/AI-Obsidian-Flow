@@ -76,6 +76,7 @@
     "zod": "catalog:"
   },
   "dependencies": {
+    "@workspace/obsidian-core": "workspace:*",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "react-force-graph-2d": "^1.29.1"
